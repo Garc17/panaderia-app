@@ -4,7 +4,9 @@ import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ProductosService } from '../../services/productos.service';
 import { IProductos } from '../../interfaces/i-productos';
+import { IVenta } from '../../interfaces/i-venta';
 import Swal from 'sweetalert2';
+import { TicketsService } from '../../services/tickets.service';
 
 declare const bootstrap: any;
 
@@ -18,10 +20,10 @@ export class ProductosComponent {
   prueba: boolean= false
   productoCB: string = '';
   cantidad: number | null = null;
-  precio: number | null = null; // O string si prefieres
-  fecha = formatDate(new Date(), 'yyyy-MM-dd', 'en-US')
+  precio: number | null = null;
 
   productos: IProductos[] = [];
+  ticketFinal: IVenta | undefined;
   productoSeleccionado: IProductos | null = null;
   productoEliminar: number | undefined;
   productoEditar: IProductos | null = null;
@@ -29,7 +31,7 @@ export class ProductosComponent {
   cantidadSeleccionada: number = 1;
   ticket: { producto: IProductos; cantidad: number }[] = [];
 
-  constructor(private productosService: ProductosService) {}
+  constructor(private productosService: ProductosService, private ticketService: TicketsService) {}
 
   ngOnInit(): void {
     this.cargarProductos()
@@ -155,6 +157,24 @@ export class ProductosComponent {
       icon: 'success',
       timer: 1000,
     });
+  }
+
+  finalizarVenta(){
+    this.ticketFinal= {id_usuario: 2, total_venta: this.sumarTotal()}
+    this.ticketService.insertTicket(this.ticketFinal)
+      .then(venta => {
+        
+      this.ticket= []
+        Swal.fire({
+          title: 'Finalizado',
+          text: 'La venta fue finalizada',
+          icon: 'success',
+          timer: 1000,
+        });
+      })
+      .catch(() => {
+        this.ticketFinal = undefined;
+      });
   }
 
   sumarTotal(){

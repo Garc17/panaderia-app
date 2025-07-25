@@ -4,6 +4,6 @@ const { getAll, getByIdTicket, crearVenta } = require('../../controllers/tickets
 
 router.get('/', getAll);
 router.get('/:id_ticket', getByIdTicket);
-router.post('/ventas', crearVenta);
+router.post('/', crearVenta);
 
 module.exports = router;

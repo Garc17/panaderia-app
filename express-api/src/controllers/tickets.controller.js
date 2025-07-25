@@ -2,8 +2,14 @@ const Venta = require('../models/tickets.model.js');
 
 const getAll = async (req, res) => {
     try {
-        const productos = await Venta.selectAll();
-        res.json(productos);    
+        const ventas = await Venta.selectAll();
+
+        const ventasConFechaISO = ventas.map(venta => ({
+            ...venta,
+            fecha_hora: new Date(venta.fecha_hora).toISOString()
+        }));
+
+        res.json(ventasConFechaISO);    
     } catch (error) {
         console.error('Error en getAll:', error);
         res.status(500).json({ message: 'Error al obtener tickets', error: error.message });
@@ -34,7 +40,7 @@ const crearVenta = async (req, res) => {
             return res.status(400).json({ success: false, message: 'Datos inválidos' });
         }
 
-        const result = await insertVenta({ id_usuario, total_venta });
+        const result = await Venta.insertVenta({ id_usuario, total_venta });
 
         res.status(201).json({
             success: true,
