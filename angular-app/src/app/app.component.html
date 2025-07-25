@@ -3,6 +3,7 @@
     <a class="navbar-brand" [routerLink]="['/home']">
       <img style="height: 50px; width: 50px;" src="https://cdn-icons-png.flaticon.com/512/992/992710.png"/>
     </a>
+    <H1>APP TIENDA</H1>
     @if(logeado){
       <form [formGroup]="loginOutForm" (ngSubmit)="loginOut()"><button class="btn btn-primary">Cerrar Sesión</button></form>
     }
