@@ -1,0 +1,32 @@
+<div class="container py-5">
+    <a class="btn btn-secondary" style="float: right;" aria-current="page" [routerLink]="['/historico']">Ir al Histórico</a><br><br>
+    <h1 class="mb-4 text-center">Registrar Movimiento Banco</h1>
+    <form>
+        <!-- Selección de Producto -->
+        <div class="mb-3">
+            <label for="producto" class="form-label">Banco</label>
+            <select class="form-select" id="producto" required>
+                <option selected disabled value="">Elige un banco...</option>
+                <option value="producto1">Banco 1</option>
+                <option value="producto2">Banco 2</option>
+                <option value="producto3">Banco 3</option>
+            </select>
+        </div>
+
+        <!-- Cantidad -->
+        <div class="mb-3">
+            <label for="monto" class="form-label">Monto</label>
+            <input type="number" class="form-control" id="monto" placeholder="Introduce el monto" min="0" required>
+        </div>
+
+        <!-- Fecha -->
+        <div class="mb-3">
+            <label for="fecha" class="form-label">Fecha</label>
+            <input type="date" class="form-control" [value]="fecha" id="fecha" required>
+        </div>
+
+        <!-- Botón de Envío -->
+        <button type="submit" class="btn btn-primary">Añadir</button>&nbsp;
+        <a class="btn btn-secondary" aria-current="page" [routerLink]="['/home']">Volver</a>
+    </form>
+</div>

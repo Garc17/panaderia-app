@@ -1,0 +1,25 @@
+services:
+  backend:
+    build: ./express-api
+    container_name: panaderia-backend
+    restart: always
+    env_file:
+      - ./express-api/.env
+    ports:
+      - "3000:3000"
+    depends_on: []
+    networks:
+      - panaderia-net
+
+  frontend:
+    build: ./angular-app
+    container_name: panaderia-frontend
+    restart: always
+    ports:
+      - "4200:80"
+    networks:
+      - panaderia-net
+
+networks:
+  panaderia-net:
+    driver: bridge

@@ -1,0 +1,33 @@
+<body class="bg-light">
+<div class="container text-center py-5">
+    <h1 class="mb-4">Elige una opción</h1>
+
+    <div class="row g-4 justify-content-center">
+        <div class="col-12 col-md-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-body d-flex flex-column justify-content-center">
+                <h3 class="card-title">Productos</h3>
+                <a class="btn btn-success" aria-current="page" [routerLink]="['/productos']">Pasar productos</a>
+            </div>
+        </div>
+        </div>
+
+        <div class="col-12 col-md-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-body d-flex flex-column justify-content-center">
+                <h3 class="card-title">Bancos</h3>
+                <a class="btn btn-warning" aria-current="page" [routerLink]="['/bancos']">Registrar Movimiento</a>
+            </div>
+        </div>
+        </div>
+
+        <div class="col-12 col-md-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-body d-flex flex-column justify-content-center">
+                <h3 class="card-title">Histórico</h3>
+                <a class="btn btn-secondary" aria-current="page" [routerLink]="['/historico']">Ir al Histórico</a>            
+            </div>
+            </div>
+        </div>
+    </div>
+</div>

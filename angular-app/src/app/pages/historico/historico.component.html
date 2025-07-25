@@ -1,0 +1,33 @@
+<div class="container py-5">
+    <h1 class="mb-4 text-center">Histórico de Productos</h1>
+    <table class="table table-hover table-bordered">
+        <thead class="table-primary">
+            <tr>
+                <th>Movimiento</th>
+                <th>Precio</th>
+                <th>Fecha</th>
+                <th>Añadido por</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Producto/Banco</td>
+                <td>10$</td>
+                <td>2025-04-15</td>
+                <td>Persona 1</td>
+                <td id="acciones"><button class="btn"><img width="20px" src="assets/imagen/icon-ver.png"></button></td>
+            </tr>
+        </tbody>
+        <tfoot class="table-light">
+            <tr>
+                <th>Total</th>
+                <th>30$</th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </tfoot>
+    </table>
+    <a class="btn btn-secondary" aria-current="page" [routerLink]="['/home']">Volver</a>
+</div>
