@@ -1,5 +1,4 @@
 export interface IProductos {
-    estado: number;
     codproducto: number;
     cod_barras: string;
     nombre: string;
@@ -8,4 +7,5 @@ export interface IProductos {
     stock_inicial: number;
     stock_vendido: number;
     stock_actual: number;
+    estado: number;
 }

@@ -19,9 +19,9 @@ export class ProductosService {
   }
 
   getProductoPorCodigoBarras(cod_barras: string): Promise<IProductos> {
-  return lastValueFrom(
-    this.httpClient.get<IProductos>(`${this.apiUrl}/${cod_barras}`)
-  );
-}
+    return lastValueFrom(
+      this.httpClient.get<IProductos>(`${this.apiUrl}/${cod_barras}`)
+    );
+  }
 
 }
