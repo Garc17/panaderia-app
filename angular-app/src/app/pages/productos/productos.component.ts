@@ -25,6 +25,7 @@ export class ProductosComponent {
   productos: IProductos[] = [];
   ticketFinal: IVenta | undefined;
   productoSeleccionado: IProductos | null = null;
+  productosDuplicados: IProductos[] | null = null;
   productoEliminar: number | undefined;
   productoEditar: IProductos | null = null;
   cantidadEditar: number | undefined;
@@ -35,6 +36,7 @@ export class ProductosComponent {
 
   ngOnInit(): void {
     this.cargarProductos()
+    document.getElementById('productoCB')?.focus();
   }
 
   cargarProductos(){
@@ -49,8 +51,17 @@ export class ProductosComponent {
 
   abrirModalProducto() {
     const modalElement = document.getElementById('modalProducto');
+
     if (modalElement) {
       const modal = new bootstrap.Modal(modalElement);
+      modal.show();
+    }
+  }
+
+  abrirModalSeleccionProductos(){
+    const modalElementMultiple = document.getElementById('modalProductoMultiple');
+    if (modalElementMultiple) {
+      const modal = new bootstrap.Modal(modalElementMultiple);
       modal.show();
     }
   }
@@ -72,23 +83,34 @@ export class ProductosComponent {
   }
 
   onCodigoBarrasChange() {
-    const codigo = this.productoCB.trim();
-    if (!codigo) return;
+  const codigo = this.productoCB.trim();
+  if (!codigo) return;
+  
 
-    this.productosService.getProductoPorCodigoBarras(codigo)
-      .then(producto => {
-        this.productoSeleccionado = producto;
+  this.productosService.getProductoPorCodigoBarras(codigo)
+    .then(productos => {
+      if (productos.length === 1) {
+        this.productoSeleccionado = productos[0];
         this.cantidadSeleccionada = 1;
         this.productoCB = '';
 
-        // Abrir modal después de que Angular actualice la vista
         setTimeout(() => this.abrirModalProducto(), 0);
-      })
-      .catch(() => {
+      } else if (productos.length > 1) {
+        // Varios productos → mostrar modal de selección
+        this.productosDuplicados = productos;
+        this.productoCB = '';
+
+        setTimeout(() => this.abrirModalSeleccionProductos(), 0);
+      } else {
+        // No encontrado
         this.productoSeleccionado = null;
-        // Mostrar mensaje de error si se desea
-      });
-  }
+      }
+    })
+    .catch(() => {
+      this.productoSeleccionado = null;
+    });
+}
+
 
   confirmarProducto() {
     if (this.productoSeleccionado && this.cantidadSeleccionada > 0) {
@@ -100,7 +122,25 @@ export class ProductosComponent {
       // Reset
       this.productoSeleccionado = null;
       this.cantidadSeleccionada = 1;
+      document.getElementById('productoCB')?.focus();
     }
+  }
+
+  seleccionarProducto(opcion: IProductos){
+    this.productoSeleccionado= opcion
+    this.productosDuplicados= null
+
+    const modalElementMultiple = document.getElementById('modalProductoMultiple');
+    if (modalElementMultiple) {
+      const modal = bootstrap.Modal.getInstance(modalElementMultiple);
+      if (modal) {
+        modal.hide();
+      }
+    }
+
+    setTimeout(() => {
+      this.abrirModalProducto(); 
+    }, 100); // 300ms de espera
   }
 
   editarProducto(idProducto: IProductos) {
@@ -175,6 +215,9 @@ export class ProductosComponent {
       .catch(() => {
         this.ticketFinal = undefined;
       });
+
+      
+    document.getElementById('productoCB')?.focus();
   }
 
   sumarTotal(){
