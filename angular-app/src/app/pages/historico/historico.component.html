@@ -6,7 +6,6 @@
                 <th>Ticket</th>
                 <th>Precio</th>
                 <th>Fecha</th>
-                <th>Añadido por</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -14,9 +13,8 @@
                 @for (row of ventas; track row.id_ticket) {
                     <tr>
                         <td>{{ row.id_ticket }}</td>
-                        <td>{{ row.total_venta }}</td>
+                        <td>{{ row.total_venta }}&nbsp;$</td>
                         <td>{{ row.fecha_hora | date:'dd/MM/yyyy HH:mm:ss'}}</td>
-                        <td>{{ "User "+row.id_usuario }}</td>
                         <td id="acciones"><button class="btn"><img width="20px" src="assets/imagen/icon-ver.png"></button></td>
                     </tr>
                 }
@@ -24,8 +22,7 @@
         <tfoot class="table-light">
             <tr>
                 <th>Total</th>
-                <th>{{totalVentas}}</th>
-                <th></th>
+                <th>{{totalVentas}}&nbsp;$</th>
                 <th></th>
                 <th></th>
             </tr>

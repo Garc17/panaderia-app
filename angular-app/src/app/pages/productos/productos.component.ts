@@ -7,6 +7,7 @@ import { IProductos } from '../../interfaces/i-productos';
 import { IVenta } from '../../interfaces/i-venta';
 import Swal from 'sweetalert2';
 import { TicketsService } from '../../services/tickets.service';
+import { DetallesTicketService } from '../../services/detalles-ticket.service';
 
 declare const bootstrap: any;
 
@@ -32,7 +33,7 @@ export class ProductosComponent {
   cantidadSeleccionada: number = 1;
   ticket: { producto: IProductos; cantidad: number }[] = [];
 
-  constructor(private productosService: ProductosService, private ticketService: TicketsService) {}
+  constructor(private productosService: ProductosService, private ticketService: TicketsService, private detalleTicketsService: DetallesTicketService) {}
 
   ngOnInit(): void {
     this.cargarProductos()
@@ -204,18 +205,23 @@ export class ProductosComponent {
     this.ticketService.insertTicket(this.ticketFinal)
       .then(venta => {
         
-      this.ticket= []
-        Swal.fire({
-          title: 'Finalizado',
-          text: 'La venta fue finalizada',
-          icon: 'success',
-          timer: 1000,
-        });
-      })
+        this.ticket= []
+          Swal.fire({
+            title: 'Finalizado',
+            text: 'La venta fue finalizada',
+            icon: 'success',
+            timer: 1000,
+          });
+        })
       .catch(() => {
         this.ticketFinal = undefined;
       });
-
+    
+    /*this.detalleTicketsService.insertTicket()
+      .then(detalle => {
+          
+      }).catch(() => {
+      });*/
       
     document.getElementById('productoCB')?.focus();
   }

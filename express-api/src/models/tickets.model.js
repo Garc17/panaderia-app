@@ -1,9 +1,12 @@
 const db = require('../config/db');
 
 const selectAll = async () => {
-    const [result] = await db.query('SELECT * FROM ventas');
+    const [result] = await db.query(
+        'SELECT * FROM ventas WHERE DATE(fecha_hora) = CURDATE()'
+    );
     return result;
 }
+
 
 const getByIdTicket = async (id_ticket) => {
     const [result] = await db.query('SELECT * FROM ventas WHERE id_ticket = ?', [id_ticket]);
